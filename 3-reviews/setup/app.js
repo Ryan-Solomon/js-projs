@@ -43,6 +43,13 @@ const reviews = [
 // Variables
 let reviewIdx = 0;
 
+// Event Listeners
+document.body.addEventListener('load', () => {
+  console.log('the page has loaded');
+  createReview();
+});
+// Figure out what's going on here with the load event
+
 // Functions
 
 function updateIndex(direction) {
@@ -50,10 +57,14 @@ function updateIndex(direction) {
     reviewIdx = reviewIdx === 0 ? reviews.length - 1 : reviewIdx--;
   } else if (direction === 'next') {
     reviewIdx = reviewIdx === reviews.length - 1 ? 0 : reviewIdx++;
+  } else if (direction === 'random') {
+    reviewIdx = Math.floor(Math.random() * reviews.length);
   }
+  createReview();
 }
 
 function createReview() {
+  console.log('Creating Review!');
   const { id, name, job, img, text } = reviews[reviewIdx];
   // Article Container
   const articleContainer = document.createElement('article');
@@ -61,7 +72,7 @@ function createReview() {
   // Image Container & Image
   const imageContainer = document.createElement('div');
   imageContainer.classList.add('img-container');
-  const imgElement = document.createElement('img');
+  const imageElement = document.createElement('img');
   imageElement.src = img;
   imageElement.id = 'person-img';
   imageElement.alt = name;
@@ -83,17 +94,20 @@ function createReview() {
   buttonContainer.classList.add('button-container');
   const prevBtn = document.createElement('button');
   prevBtn.classList.add('prev-btn');
+  prevBtn.addEventListener('click', () => updateIndex('prev'));
   const iconEle = document.createElement('i');
-  iconEle.classList.add('fas fa-chevron-left');
+  iconEle.classList.add(['fas', 'fa-chevron-left']);
   prevBtn.append(iconEle);
   const nextBtn = document.createElement('button');
+  nextBtn.addEventListener('click', () => updateIndex('next'));
   nextBtn.classList.add('next-btn');
   const iconEle2 = document.createElement('i');
-  iconEle.classList.add('fas fa-chevron-right');
+  iconEle.classList.add(['fas', 'fa-chevron-right']);
   prevBtn.append(iconEle2);
   buttonContainer.append(prevBtn, nextBtn);
   const surpriseBtn = document.createElement('button');
   surpriseBtn.classList.add('random-btn');
   surpriseBtn.textContent = 'surprise me';
   articleContainer.append(buttonContainer, surpriseBtn);
+  surpriseBtn.addEventListener('click', () => updateIndex('random'));
 }
