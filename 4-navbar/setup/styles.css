@@ -181,6 +181,9 @@ nav {
 .logo {
   height: 40px;
 }
+.links {
+  height: 0px;
+}
 .links a {
   color: var(--clr-grey-3);
   font-size: 1rem;
@@ -198,11 +201,7 @@ nav {
 .social-icons {
   display: none;
 }
-.links {
-  /* height: 0;
-  overflow: hidden;
-  transition: var(--transition); */
-}
+
 .show-links {
   height: 10rem;
 }
@@ -222,8 +221,7 @@ nav {
     display: none;
   }
   .links {
-    height: auto;
-    display: flex;
+    height: 0px;
   }
   .links a {
     padding: 0;
