@@ -39,24 +39,23 @@ const reviews = [
 ];
 
 // Elements
+const containerElement = document.querySelector('.container');
 
 // Variables
 let reviewIdx = 0;
 
 // Event Listeners
-document.body.addEventListener('load', () => {
-  console.log('the page has loaded');
+window.addEventListener('load', () => {
   createReview();
 });
-// Figure out what's going on here with the load event
 
 // Functions
 
 function updateIndex(direction) {
   if (direction === 'prev') {
-    reviewIdx = reviewIdx === 0 ? reviews.length - 1 : reviewIdx--;
+    reviewIdx = reviewIdx === 0 ? reviews.length - 1 : reviewIdx - 1;
   } else if (direction === 'next') {
-    reviewIdx = reviewIdx === reviews.length - 1 ? 0 : reviewIdx++;
+    reviewIdx = reviewIdx === reviews.length - 1 ? 0 : reviewIdx + 1;
   } else if (direction === 'random') {
     reviewIdx = Math.floor(Math.random() * reviews.length);
   }
@@ -65,6 +64,7 @@ function updateIndex(direction) {
 
 function createReview() {
   console.log('Creating Review!');
+  containerElement.innerHTML = '';
   const { id, name, job, img, text } = reviews[reviewIdx];
   // Article Container
   const articleContainer = document.createElement('article');
@@ -99,15 +99,19 @@ function createReview() {
   iconEle.classList.add(['fas', 'fa-chevron-left']);
   prevBtn.append(iconEle);
   const nextBtn = document.createElement('button');
+  nextBtn.textContent = 'Next';
   nextBtn.addEventListener('click', () => updateIndex('next'));
   nextBtn.classList.add('next-btn');
   const iconEle2 = document.createElement('i');
   iconEle.classList.add(['fas', 'fa-chevron-right']);
   prevBtn.append(iconEle2);
+  prevBtn.textContent = 'Prev';
   buttonContainer.append(prevBtn, nextBtn);
   const surpriseBtn = document.createElement('button');
   surpriseBtn.classList.add('random-btn');
   surpriseBtn.textContent = 'surprise me';
   articleContainer.append(buttonContainer, surpriseBtn);
   surpriseBtn.addEventListener('click', () => updateIndex('random'));
+
+  containerElement.append(articleContainer);
 }
